@@ -10,7 +10,7 @@ import (
 	
 )
 
-//jgjghjghjg
+//test func in integration CI
 func TestIntegrationCryptoSha256(t *testing.T) {
 	t.Log("Testing CryptoSha256 func... (expected : r53pPpbhHSwk0L70Mlx23IJKseX7zOhg69MhxApx69c=)")
 	expected := "r53pPpbhHSwk0L70Mlx23IJKseX7zOhg69MhxApx69c="
