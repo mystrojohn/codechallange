@@ -11,7 +11,8 @@ import (
     "encoding/base64"
 	"encoding/pem"
 	"encoding/asn1" 
-	"bufio"
+   "bufio"
+   "io/ioutil"
 
 )
 
@@ -121,6 +122,16 @@ func main() {
    //fmt.Println("John Private Key :  ", *johnPrivateKey)  
    fmt.Println("John Public key ", johnPublicKey)
 
+   // save private key
+   pkey := x509.MarshalPKCS1PrivateKey(johnPrivateKey)
+   ioutil.WriteFile("private.key", pkey, 0777)
+   fmt.Println("private key saved to private.key")
+   
+   // save public key
+   pubkey, _ := x509.MarshalPKIXPublicKey(johnPublicKey)
+   ioutil.WriteFile("public.key", pubkey, 0777)
+   fmt.Println("public key saved to public.key")
+
 
 //	   Once the RSA Key pair is generated store it in PEM format with pkcs encoding.
 	
@@ -129,9 +140,11 @@ func main() {
 		savePublicPEMKey("pubkey.pem",johnPublicKey)
 	}
 
-	fmt.Println(args)
-	fmt.Println(`"message":"`, args, `",`)
-    fmt.Println(`"signature":"`, sh256, `",`)
-	fmt.Println(`"pubkey":"-----BEGIN PUBLIC KEY-----\n`,johnPublicKey,`\n-----END PUBLIC KEY-----\n"`)
 
+   //fmt.Println(args)
+   fmt.Println(`{`) 
+	fmt.Println(`"message":"`, args, `",`)
+   fmt.Println(`"signature":"`, sh256, `",`)
+	fmt.Println(`"pubkey":"-----BEGIN PUBLIC KEY-----\n`,johnPublicKey,`\n-----END PUBLIC KEY-----\n"`)
+	fmt.Println(`}`) 
 }
